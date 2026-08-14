@@ -75,6 +75,7 @@ services:
         NEXT_PUBLIC_TRY_FORM_ID: ${NEXT_PUBLIC_TRY_FORM_ID:-}
         NEXT_PUBLIC_CLOUD_WAITLIST_FORM_ID: ${NEXT_PUBLIC_CLOUD_WAITLIST_FORM_ID:-}
         NEXT_PUBLIC_DEMO_MODE: ${NEXT_PUBLIC_DEMO_MODE:-false}
+        NODE_OPTIONS: ${NODE_OPTIONS:---max-old-space-size=3072}
     restart: unless-stopped
     environment:
       DATABASE_URL: postgresql://${POSTGRES_USER:-recto}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB:-recto}?schema=public
@@ -115,6 +116,7 @@ services:
         NEXT_PUBLIC_TRY_FORM_ID: ${NEXT_PUBLIC_TRY_FORM_ID:-}
         NEXT_PUBLIC_CLOUD_WAITLIST_FORM_ID: ${NEXT_PUBLIC_CLOUD_WAITLIST_FORM_ID:-}
         NEXT_PUBLIC_DEMO_MODE: ${NEXT_PUBLIC_DEMO_MODE:-false}
+        NODE_OPTIONS: ${NODE_OPTIONS:---max-old-space-size=3072}
     restart: unless-stopped
     environment:
       DATABASE_URL: postgresql://${POSTGRES_USER:-recto}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB:-recto}?schema=public
