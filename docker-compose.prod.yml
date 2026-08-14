@@ -131,7 +131,7 @@ services:
     depends_on:
       app:
         condition: service_started
-    command: npx tsx worker.ts
+    command: npx tsx --tsconfig tsconfig.json -r tsconfig-paths/register worker.ts
 
 volumes:
   pgdata:
