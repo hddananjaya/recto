@@ -76,7 +76,7 @@ export function LandingHero({ starCount }: LandingHeroProps) {
         </p>
 
         <Screenshot
-          src="/images/2.png"
+          src="/images/theme-dusk-desktop.png"
           alt="Published form with sky gradient theme"
           className="mt-16"
           priority

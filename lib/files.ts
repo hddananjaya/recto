@@ -183,14 +183,6 @@ export function getFileTypeDetailLabel(
   return "File";
 }
 
-/** @deprecated Prefer getFileTypeDetailLabel or getFileTypeTableLabel */
-export function getFileTypeLabel(
-  mimeType: string,
-  fileName?: string,
-): string {
-  return getFileTypeDetailLabel(mimeType, fileName);
-}
-
 export function formatFileAnswerSummary(
   value: FileAnswerReference,
   options?: { includeFileName?: boolean },

@@ -109,14 +109,6 @@ export function normalizeFileUploadConfig(
   };
 }
 
-/** @deprecated Use normalizeFileUploadConfig */
-export function normalizeFileUploadPresets(
-  presets: unknown,
-): FileUploadPresetId[] {
-  return normalizeFileUploadConfig({ allowedFilePresets: presets as FileUploadPresetId[] })
-    .allowedFilePresets;
-}
-
 export function parseCustomFileTypes(raw: string | undefined): {
   mimeTypes: Set<string>;
   extensions: Set<string>;
@@ -366,17 +358,6 @@ export function resolveUploadMimeTypeForConfig(
   }
 
   return null;
-}
-
-/** @deprecated Use resolveUploadMimeTypeForConfig */
-export function resolveUploadMimeTypeForPresets(
-  fileName: string,
-  mimeType: string | null | undefined,
-  presets: FileUploadPresetId[],
-): string | null {
-  return resolveUploadMimeTypeForConfig(fileName, mimeType, {
-    allowedFilePresets: presets,
-  });
 }
 
 export function toggleFileUploadPreset(
