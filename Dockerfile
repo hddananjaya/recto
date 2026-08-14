@@ -4,6 +4,7 @@ FROM base AS deps
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
 COPY package.json pnpm-lock.yaml* pnpm-workspace.yaml* ./
+COPY prisma ./prisma
 RUN corepack enable && corepack prepare pnpm@10.3.0 --activate
 RUN pnpm install --frozen-lockfile
 
