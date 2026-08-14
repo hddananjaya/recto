@@ -27,7 +27,7 @@ COPY . .
 ENV NEXT_TELEMETRY_DISABLED=1
 RUN corepack enable && corepack prepare pnpm@10.3.0 --activate
 RUN pnpm prisma generate
-RUN pnpm build
+RUN NODE_OPTIONS="--max-old-space-size=4096" pnpm build
 
 FROM base AS runner
 WORKDIR /app
