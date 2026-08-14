@@ -1,0 +1,43 @@
+# dependencies
+node_modules
+.pnp
+.pnp.*
+
+# build output
+.next
+out
+build
+coverage
+
+# env and secrets
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# git
+.git
+.gitignore
+
+# tests and e2e
+e2e
+playwright-report
+test-results
+**/*.test.ts
+**/*.test.tsx
+**/*.spec.ts
+**/*.spec.tsx
+
+# editor and OS
+.DS_Store
+*.md
+!README.md
+.vscode
+.idea
+.cursor
+.agents
+
+# docker
+Dockerfile*
+docker-compose*.yml
+compose*.yaml

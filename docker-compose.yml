@@ -1,0 +1,97 @@
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: recto
+      POSTGRES_PASSWORD: recto
+      POSTGRES_DB: recto
+    ports:
+      - "5433:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U recto -d recto"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  minio:
+    image: minio/minio:latest
+    restart: unless-stopped
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER:-recto}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD:-recto-secret-key}
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - minio_data:/data
+
+  minio-init:
+    image: minio/mc:latest
+    depends_on:
+      - minio
+    volumes:
+      - ./infra/minio-cors.json:/tmp/cors.json:ro
+    entrypoint: >
+      /bin/sh -c "
+      sleep 5;
+      mc alias set recto http://minio:9000 ${MINIO_ROOT_USER:-recto} ${MINIO_ROOT_PASSWORD:-recto-secret-key};
+      mc mb --ignore-existing recto/recto-uploads;
+      mc cors set recto/recto-uploads /tmp/cors.json;
+      exit 0;
+      "
+
+  app:
+    build: .
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      DATABASE_URL: "postgresql://recto:recto@db:5432/recto?schema=public"
+      AUTH_SECRET: ${AUTH_SECRET}
+      AUTH_URL: ${AUTH_URL:-http://localhost:3000}
+      NEXT_PUBLIC_AUTH_URL: ${NEXT_PUBLIC_AUTH_URL:-http://localhost:3000}
+      GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID}
+      GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET}
+      GOOGLE_SERVICE_ACCOUNT_JSON: ${GOOGLE_SERVICE_ACCOUNT_JSON}
+      NEXT_PUBLIC_DEMO_MODE: ${NEXT_PUBLIC_DEMO_MODE:-false}
+      OPEN_ROUTER_KEY: ${OPEN_ROUTER_KEY:-}
+      OPEN_ROUTER_MODEL: ${OPEN_ROUTER_MODEL:-deepseek/deepseek-v4-flash-0731}
+      OPEN_ROUTER_SITE_URL: ${OPEN_ROUTER_SITE_URL:-}
+      S3_ENDPOINT: http://minio:9000
+      S3_PUBLIC_ENDPOINT: http://localhost:9000
+      S3_REGION: auto
+      S3_BUCKET: recto-uploads
+      S3_ACCESS_KEY_ID: ${MINIO_ROOT_USER:-recto}
+      S3_SECRET_ACCESS_KEY: ${MINIO_ROOT_PASSWORD:-recto-secret-key}
+      S3_FORCE_PATH_STYLE: "true"
+    depends_on:
+      db:
+        condition: service_healthy
+      minio-init:
+        condition: service_completed_successfully
+    command: sh -c "npx prisma migrate deploy && node server.js"
+
+  worker:
+    build: .
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: "postgresql://recto:recto@db:5432/recto?schema=public"
+      GOOGLE_SERVICE_ACCOUNT_JSON: ${GOOGLE_SERVICE_ACCOUNT_JSON}
+      AUTH_URL: ${AUTH_URL:-http://localhost:3000}
+      S3_ENDPOINT: http://minio:9000
+      S3_REGION: auto
+      S3_BUCKET: recto-uploads
+      S3_ACCESS_KEY_ID: ${MINIO_ROOT_USER:-recto}
+      S3_SECRET_ACCESS_KEY: ${MINIO_ROOT_PASSWORD:-recto-secret-key}
+      S3_FORCE_PATH_STYLE: "true"
+    depends_on:
+      - app
+    command: npx tsx worker.ts
+
+volumes:
+  pgdata:
+  minio_data:

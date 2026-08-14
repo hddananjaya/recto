@@ -1,0 +1,69 @@
+"use client";
+
+interface LogoProps {
+  className?: string;
+  size?: number;
+}
+
+export function Logo({ className, size = 32 }: LogoProps) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 100 100"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={className}
+      aria-label="Recto"
+    >
+      <circle cx="50" cy="50" r="46" fill="currentColor" />
+      <path
+        d="M36 30 H56 L66 40 V66 C66 67.1 65.1 68 64 68 H36 C34.9 68 34 67.1 34 66 V32 C34 30.9 34.9 30 36 30 Z"
+        fill="white"
+      />
+      <line
+        x1="40"
+        y1="54"
+        x2="60"
+        y2="54"
+        stroke="currentColor"
+        strokeWidth="3.5"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+}
+
+interface LogoMarkProps {
+  className?: string;
+  size?: number;
+}
+
+export function LogoMark({ className, size = 14 }: LogoMarkProps) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 100 100"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={className}
+      aria-label="Recto"
+    >
+      <circle cx="50" cy="50" r="46" fill="currentColor" />
+      <path
+        d="M36 30 H56 L66 40 V66 C66 67.1 65.1 68 64 68 H36 C34.9 68 34 67.1 34 66 V32 C34 30.9 34.9 30 36 30 Z"
+        fill="white"
+      />
+      <line
+        x1="40"
+        y1="54"
+        x2="60"
+        y2="54"
+        stroke="currentColor"
+        strokeWidth="3.5"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+}
