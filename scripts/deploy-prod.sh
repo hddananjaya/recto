@@ -1,6 +1,37 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+SKIP_GOOGLE_CHECK=false
+
+usage() {
+  cat <<EOF
+Usage: $0 [options]
+
+Options:
+  --skip-google-check    Skip validation of GOOGLE_* env vars.
+                         The app will start, but Google sign-in and Sheets sync will not work.
+  -h, --help             Show this help message.
+EOF
+}
+
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --skip-google-check)
+      SKIP_GOOGLE_CHECK=true
+      shift
+      ;;
+    -h|--help)
+      usage
+      exit 0
+      ;;
+    *)
+      echo "Unknown option: $1" >&2
+      usage >&2
+      exit 1
+      ;;
+  esac
+done
+
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "${ROOT_DIR}"
 
@@ -29,10 +60,15 @@ required=(
   AUTH_SECRET
   POSTGRES_PASSWORD
   MINIO_ROOT_PASSWORD
-  GOOGLE_CLIENT_ID
-  GOOGLE_CLIENT_SECRET
-  GOOGLE_SERVICE_ACCOUNT_JSON
 )
+
+if [[ "${SKIP_GOOGLE_CHECK}" != true ]]; then
+  required+=(
+    GOOGLE_CLIENT_ID
+    GOOGLE_CLIENT_SECRET
+    GOOGLE_SERVICE_ACCOUNT_JSON
+  )
+fi
 
 for var in "${required[@]}"; do
   value="$(env_value "${var}")"

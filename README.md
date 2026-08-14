@@ -43,19 +43,22 @@ Services: `app`, `worker`, `db`, `minio`.
 
 ### Production (Hetzner VPS + SSL)
 
-Production URL: **https://recto.akila.cc**
-
 See **[DEPLOYMENT.md](DEPLOYMENT.md)** for the full guide: DNS, server bootstrap, env management, CI/CD, backups, and troubleshooting.
 
-Quick start:
+One-command install (after DNS points to your server):
 
 ```bash
 ssh root@YOUR_SERVER_IP
-git clone https://github.com/hddananjaya/recto.git && cd recto
-sudo bash scripts/bootstrap-server.sh
-# Create /opt/recto/.env from .env.production.example, then:
-sudo -u deploy bash -lc 'cd /opt/recto && ./scripts/deploy-prod.sh'
+curl -fsSL https://raw.githubusercontent.com/hddananjaya/recto/main/scripts/install.sh | \
+  bash -s -- \
+  --domain recto.example.com \
+  --email admin@example.com \
+  --google-client-id XXX.apps.googleusercontent.com \
+  --google-client-secret GOCSPX-YYY \
+  --google-service-account-json '{"type":"service_account",...}'
 ```
+
+Or run the same command without arguments for an interactive prompt.
 
 ### Environment variables
 

@@ -34,7 +34,7 @@ Services are defined in `docker-compose.prod.yml`. Local development uses `docke
 ## Prerequisites
 
 - Hetzner VPS (Ubuntu 22.04 or 24.04; **2 GB RAM** recommended)
-- Domain with DNS access (`akila.cc`)
+- Domain with DNS access
 - Google Cloud project with:
   - OAuth 2.0 credentials (sign-in)
   - Service account with Sheets API (response sync)
@@ -42,7 +42,41 @@ Services are defined in `docker-compose.prod.yml`. Local development uses `docke
 
 ---
 
-## 1. DNS
+## 1. One-command install (recommended)
+
+If your DNS already points to the server, SSH in as root and run:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/hddananjaya/recto/main/scripts/install.sh | \
+  bash -s -- \
+  --domain recto.example.com \
+  --email admin@example.com \
+  --google-client-id XXX.apps.googleusercontent.com \
+  --google-client-secret GOCSPX-YYY \
+  --google-service-account-json '{"type":"service_account",...}'
+```
+
+Or run interactively:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/hddananjaya/recto/main/scripts/install.sh | bash
+```
+
+This script will:
+
+- Install Docker and UFW
+- Clone the repo to `/opt/recto`
+- Generate random secrets
+- Create `/opt/recto/.env`
+- Build and start the production stack
+
+If you skip Google OAuth, the app starts but sign-in and Sheets sync are disabled until you edit `.env` and re-run `./scripts/deploy-prod.sh`.
+
+Skip to [section 5](#5-first-deploy) after the script finishes.
+
+---
+
+## 2. DNS
 
 Create **A records** pointing to your server IP **before** the first deploy (Let's Encrypt needs this):
 
@@ -60,7 +94,7 @@ dig +short files.recto.akila.cc
 
 ---
 
-## 2. Server bootstrap (one time)
+## 3. Server bootstrap (one time)
 
 SSH in as root and run the bootstrap script:
 
@@ -80,7 +114,7 @@ This script:
 
 ---
 
-## 3. Environment variables
+## 4. Environment variables
 
 ### Where secrets live
 
@@ -166,7 +200,7 @@ In [Google Cloud Console](https://console.cloud.google.com/) → APIs & Services
 
 ---
 
-## 4. First deploy
+## 5. First deploy
 
 ```bash
 sudo -u deploy bash -lc 'cd /opt/recto && chmod +x scripts/deploy-prod.sh && ./scripts/deploy-prod.sh'
@@ -190,7 +224,7 @@ Open https://recto.akila.cc and sign in with Google.
 
 ---
 
-## 5. CI/CD (GitHub Actions)
+## 6. CI/CD (GitHub Actions)
 
 Workflow: [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml)
 
@@ -240,7 +274,7 @@ After secrets are set, push to `main` to deploy.
 
 ---
 
-## 6. Day-to-day operations
+## 7. Day-to-day operations
 
 ### Deploy a new version
 
@@ -289,7 +323,7 @@ cat recto-backup.sql | docker compose -f docker-compose.prod.yml --env-file .env
 
 ---
 
-## 7. Security checklist
+## 8. Security checklist
 
 - [ ] `.env` is `chmod 600` and not in git
 - [ ] GitHub Secrets contain SSH keys only — no `AUTH_SECRET`, Google keys, etc.
@@ -302,7 +336,7 @@ cat recto-backup.sql | docker compose -f docker-compose.prod.yml --env-file .env
 
 ---
 
-## 8. Troubleshooting
+## 9. Troubleshooting
 
 ### Caddy / SSL certificate fails
 
@@ -346,7 +380,7 @@ Common cause: `DATABASE_URL` password mismatch after changing `POSTGRES_PASSWORD
 
 ---
 
-## 9. File reference
+## 10. File reference
 
 | File | Purpose |
 |------|---------|
