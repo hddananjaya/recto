@@ -10,7 +10,7 @@ import {
   questionTitle,
 } from "./realistic-data";
 
-const SAMPLE_IMAGE = path.join(process.cwd(), "e2e-fixtures/sample.png");
+const SAMPLE_IMAGE = path.join(process.cwd(), "e2e/fixtures/sample.png");
 
 function labeledField(page: Page, type: QuestionType) {
   return page.getByLabel(questionTitle(type), { exact: true });

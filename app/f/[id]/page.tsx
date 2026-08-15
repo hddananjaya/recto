@@ -6,7 +6,6 @@ import { parseAsInteger, useQueryState } from "nuqs";
 import { getPublicForm } from "@/lib/actions";
 import type { FormDetail } from "@/lib/types";
 import { FormRenderer } from "@/components/form-renderer";
-import { PlaygroundClaimBanner } from "@/components/playground-claim-banner";
 import { PoweredByRecto } from "@/components/powered-by-recto";
 import { FormBackground, FormThemeProvider } from "@/components/form-theme";
 import { FormPageSkeleton } from "@/components/ui/form-page-skeleton";
@@ -111,17 +110,10 @@ export default function PublicFormPage() {
   return (
     <FormThemeProvider theme={theme}>
       <div className={publicFormPageShellClasses}>
-        {form.isPlayground ? (
-          <PlaygroundClaimBanner formId={id} expiresAt={form.expiresAt} />
-        ) : null}
         {hasTheme ? (
           <FormBackground
             theme={theme}
-            className={cn(
-              publicFormDesktopShellClasses(),
-              form.isPlayground &&
-                "pt-[4.25rem] sm:[--public-form-card-offset:12rem]",
-            )}
+            className={cn(publicFormDesktopShellClasses())}
           >
             <div className={publicFormDesktopStageClasses}>{content}</div>
           </FormBackground>
@@ -130,8 +122,6 @@ export default function PublicFormPage() {
             className={cn(
               publicFormDesktopShellClasses(),
               "bg-background sm:bg-muted",
-              form.isPlayground &&
-                "pt-[4.25rem] sm:[--public-form-card-offset:12rem]",
             )}
           >
             <div className={publicFormDesktopStageClasses}>{content}</div>

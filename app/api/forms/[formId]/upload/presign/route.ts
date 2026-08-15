@@ -11,7 +11,6 @@ import {
 import { mapQuestion } from "@/lib/questions";
 import { prisma } from "@/lib/prisma";
 import { getClientIp } from "@/lib/client-ip";
-import { isPlaygroundFormExpired } from "@/lib/playground";
 import { checkRateLimit } from "@/lib/rate-limit";
 import { MAX_UPLOAD_BYTES } from "@/lib/storage/config";
 import {
@@ -41,16 +40,6 @@ export async function POST(
 
   if (!form) {
     return NextResponse.json({ error: "Form not found" }, { status: 404 });
-  }
-
-  if (
-    form.isPlayground ||
-    isPlaygroundFormExpired(form.isPlayground, form.expiresAt)
-  ) {
-    return NextResponse.json(
-      { error: "File uploads are not available on playground forms." },
-      { status: 403 },
-    );
   }
 
   const ip = await getClientIp();

@@ -8,7 +8,6 @@ import type { Question } from "@/lib/types";
 import { mapQuestion } from "@/lib/questions";
 import { buildSubmissionSchema, sanitizeSubmissionBody } from "@/lib/validation";
 import { getClientIp } from "@/lib/client-ip";
-import { isPlaygroundFormExpired } from "@/lib/playground";
 import { checkRateLimit } from "@/lib/rate-limit";
 import { attachSubmissionFiles } from "@/lib/submission-files";
 
@@ -24,10 +23,6 @@ export async function POST(
   });
 
   if (!form) {
-    return NextResponse.json({ error: "Form not found" }, { status: 404 });
-  }
-
-  if (isPlaygroundFormExpired(form.isPlayground, form.expiresAt)) {
     return NextResponse.json({ error: "Form not found" }, { status: 404 });
   }
 

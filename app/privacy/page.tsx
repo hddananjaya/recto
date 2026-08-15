@@ -94,7 +94,7 @@ export default function PrivacyPage() {
         <p>
           Account data is kept while your account exists. Submissions are kept
           until deleted by the form owner or when the form is removed.
-          Playground and demo forms may expire automatically.
+          Demo forms may be reset or removed without notice.
         </p>
       </section>
 

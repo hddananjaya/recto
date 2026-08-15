@@ -4,7 +4,6 @@ Open-source, self-hosted forms that sync responses to Google Sheets. MIT license
 
 ## Try without deploying
 
-- **Playground** (`/playground`) — generate a form with AI (no sign-in)
 - **Demo** (`/demo`) — interactive sample form
 
 ## Self-host

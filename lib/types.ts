@@ -68,8 +68,6 @@ export interface Form {
   createdAt: string;
   updatedAt: string;
   isPublished: boolean;
-  isPlayground?: boolean;
-  expiresAt?: string | null;
   questionCount: number;
   responseCount: number;
   sheetUrl?: string;
@@ -119,6 +117,4 @@ export type SuggestFormResult =
       message: string;
     };
 
-export type ClaimPlaygroundResult =
-  | { ok: true; formId: string }
-  | { ok: false; message: string };
+

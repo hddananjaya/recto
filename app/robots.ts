@@ -10,7 +10,7 @@ export default function robots(): MetadataRoute.Robots {
     rules: [
       {
         userAgent: "*",
-        allow: ["/", TRY_FORM_PATH, "/playground"],
+        allow: ["/", TRY_FORM_PATH],
         disallow: ["/api/", "/forms/", "/dashboard", "/sign-in"],
       },
     ],

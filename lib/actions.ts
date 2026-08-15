@@ -5,7 +5,7 @@ import { headers } from "next/headers";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { Prisma } from "@prisma/client";
-import type { CreateFormInput, Form, FormDetail, Question, Submission, SuggestFormResult, ClaimPlaygroundResult } from "./types";
+import type { CreateFormInput, Form, FormDetail, Question, Submission, SuggestFormResult } from "./types";
 import { AI_PROMPT_MAX_LENGTH, isAiConfigured } from "@/lib/ai/config";
 import {
   FormSuggestionError,
@@ -23,7 +23,6 @@ import {
   SUBMISSIONS_PAGE_SIZE,
   submissionPageFromRank,
 } from "@/lib/submissions-pagination";
-import { isPlaygroundFormExpired } from "@/lib/playground";
 import { getServiceAccountEmailFromEnv } from "@/lib/sheets/service-account";
 
 async function getSessionUserId() {
@@ -47,8 +46,6 @@ function mapForm(form: FormWithCounts): Form {
     createdAt: form.createdAt.toISOString(),
     updatedAt: form.updatedAt.toISOString(),
     isPublished: form.isPublished,
-    isPlayground: form.isPlayground,
-    expiresAt: form.expiresAt?.toISOString() ?? null,
     questionCount: form._count.questions,
     responseCount: form._count.submissions,
     sheetUrl: form.sheetConnection?.sheetUrl ?? undefined,
@@ -387,15 +384,10 @@ export async function connectSheet(formId: string, sheetUrl: string) {
     throw new Error(access.message);
   }
 
-  const form = await prisma.form.findFirstOrThrow({
+  await prisma.form.findFirstOrThrow({
     where: { id: formId, ownerId },
-    select: { isPlayground: true },
+    select: { id: true },
   });
-  if (form.isPlayground) {
-    throw new Error(
-      "Save this form to your account before connecting a Google Sheet.",
-    );
-  }
   await prisma.sheetConnection.upsert({
     where: { formId },
     create: {
@@ -526,9 +518,6 @@ export async function getPublicForm(id: string): Promise<FormDetail | null> {
     },
   });
   if (!form) return null;
-  if (isPlaygroundFormExpired(form.isPlayground, form.expiresAt)) {
-    return null;
-  }
   return {
     ...mapForm({
       ...form,
@@ -536,39 +525,6 @@ export async function getPublicForm(id: string): Promise<FormDetail | null> {
     }),
     questions: form.questions.map(mapQuestion),
   };
-}
-
-export async function claimPlaygroundForm(
-  formId: string,
-): Promise<ClaimPlaygroundResult> {
-  const ownerId = await getSessionUserId();
-
-  const form = await prisma.form.findFirst({
-    where: { id: formId, isPlayground: true, isPublished: true },
-  });
-
-  if (!form) {
-    return { ok: false, message: "This playground form is no longer available." };
-  }
-
-  if (isPlaygroundFormExpired(form.isPlayground, form.expiresAt)) {
-    return { ok: false, message: "This playground form has expired." };
-  }
-
-  await prisma.form.update({
-    where: { id: formId },
-    data: {
-      ownerId,
-      isPlayground: false,
-      expiresAt: null,
-    },
-  });
-
-  revalidatePath("/dashboard");
-  revalidatePath(`/forms/${formId}`);
-  revalidatePath(`/f/${formId}`);
-
-  return { ok: true, formId };
 }
 
 function stripQuestionFields(q: Question): Record<string, unknown> {

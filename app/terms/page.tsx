@@ -85,11 +85,11 @@ export default function TermsPage() {
       </section>
 
       <section>
-        <h2>Demo and playground</h2>
+        <h2>Demo forms</h2>
         <p>
-          Demo and playground forms are provided for evaluation. They may be
-          reset, deleted, or rate-limited without notice. Do not rely on them
-          for production or sensitive data.
+          Demo forms are provided for evaluation. They may be reset, deleted,
+          or rate-limited without notice. Do not rely on them for production or
+          sensitive data.
         </p>
       </section>
 

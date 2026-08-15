@@ -181,7 +181,7 @@ docker compose up minio minio-init -d
 pnpm dev               # :3000
 ```
 
-Fixtures: `e2e-fixtures/sample.png`, `e2e-fixtures/sample.pdf`
+Fixtures: `e2e/fixtures/sample.png`, `e2e/fixtures/sample.pdf`
 
 Draft key: `localStorage["recto-form-draft:{formId}"]`
 

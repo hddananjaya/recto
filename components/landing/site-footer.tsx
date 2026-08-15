@@ -29,7 +29,7 @@ const FOOTER_COLUMNS: { title: string; links: FooterLinkItem[] }[] = [
     title: "Resources",
     links: [
       { href: GITHUB_URL, label: "GitHub", external: true },
-      { href: "/playground", label: "Playground" },
+
       {
         href: `${GITHUB_URL}#readme`,
         label: "Documentation",

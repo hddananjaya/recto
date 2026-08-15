@@ -14,7 +14,7 @@ export async function generateMetadata({
   const { id } = await params;
   const form = await prisma.form.findFirst({
     where: { id, isPublished: true },
-    select: { isPlayground: true, title: true },
+    select: { title: true },
   });
 
   if (!form) {
@@ -23,9 +23,6 @@ export async function generateMetadata({
 
   return {
     title: form.title,
-    ...(form.isPlayground
-      ? { robots: { index: false, follow: false } }
-      : {}),
   };
 }
 

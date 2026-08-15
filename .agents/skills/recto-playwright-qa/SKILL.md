@@ -395,11 +395,11 @@ async (page) => {
 ### File upload
 
 ```javascript
-await page.locator('input[type="file"]').setInputFiles('/ABS/PATH/e2e-fixtures/sample.png');
+await page.locator('input[type="file"]').setInputFiles('/ABS/PATH/e2e/fixtures/sample.png');
 await page.waitForTimeout(3000); // wait for presign + PUT
 ```
 
-Or `browser_file_upload` after clicking the upload zone. Path: `{workspace}/e2e-fixtures/sample.png`.
+Or `browser_file_upload` after clicking the upload zone. Path: `{workspace}/e2e/fixtures/sample.png`.
 
 ### Full public walk helper
 
@@ -408,7 +408,7 @@ Use one `browser_run_code_unsafe` script per viewport after clearing draft. Bran
 ```javascript
 async (page) => {
   const formId = 'FORM_ID';
-  const filePath = '/ABS/PATH/e2e-fixtures/sample.png';
+  const filePath = '/ABS/PATH/e2e/fixtures/sample.png';
   await page.goto(`http://localhost:3000/f/${formId}`);
   await page.evaluate((id) => localStorage.removeItem(`recto-form-draft:${id}`), formId);
   await page.reload();

@@ -2,8 +2,6 @@ export const LANDING_EVENTS = [
   "try_app_click",
   "demo_click",
   "waitlist_click",
-  "playground_click",
-  "playground_start",
   "prompt_chip_click",
   "github_star_click",
 ] as const;
