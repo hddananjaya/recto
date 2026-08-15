@@ -1,7 +1,11 @@
 import Link from "next/link";
 import { ArrowSquareOut } from "@phosphor-icons/react/dist/ssr";
 
-import { GITHUB_URL, TRY_APP_PATH, TRY_FORM_PATH } from "@/components/landing/constants";
+import {
+  GITHUB_URL,
+  TRY_APP_PATH,
+  TRY_FORM_PATH,
+} from "@/components/landing/constants";
 import { LANDING_CONTAINER } from "@/components/landing/tokens";
 import { Logo } from "@/components/logo";
 import { LEGAL_PAGES } from "@/lib/legal";

@@ -72,7 +72,9 @@ export default function PrivacyPage() {
         <ul>
           <li>Authenticate you and operate your account.</li>
           <li>Store and deliver form submissions to the form owner.</li>
-          <li>Sync submissions to Google Sheets when the owner has connected one.</li>
+          <li>
+            Sync submissions to Google Sheets when the owner has connected one.
+          </li>
           <li>Prevent spam, abuse, and excessive automated submissions.</li>
           <li>Operate, secure, and improve the service.</li>
         </ul>
@@ -93,8 +95,8 @@ export default function PrivacyPage() {
         <h2>Retention</h2>
         <p>
           Account data is kept while your account exists. Submissions are kept
-          until deleted by the form owner or when the form is removed.
-          Demo forms may be reset or removed without notice.
+          until deleted by the form owner or when the form is removed. Demo
+          forms may be reset or removed without notice.
         </p>
       </section>
 
@@ -136,8 +138,7 @@ export default function PrivacyPage() {
           website after changes are posted means you accept the updated policy.
         </p>
         <p>
-          See also our{" "}
-          <Link href="/terms">Terms of Service</Link> and{" "}
+          See also our <Link href="/terms">Terms of Service</Link> and{" "}
           <Link href="/cookies">Cookie Policy</Link>.
         </p>
       </section>

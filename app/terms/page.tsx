@@ -63,8 +63,8 @@ export default function TermsPage() {
         <h2>Form owners and respondents</h2>
         <p>
           If you create forms, you are responsible for the content of those
-          forms, obtaining any required consents from respondents, and
-          complying with laws that apply to the data you collect.
+          forms, obtaining any required consents from respondents, and complying
+          with laws that apply to the data you collect.
         </p>
         <p>
           If you submit a response to someone else&apos;s form, you understand
@@ -87,8 +87,8 @@ export default function TermsPage() {
       <section>
         <h2>Demo forms</h2>
         <p>
-          Demo forms are provided for evaluation. They may be reset, deleted,
-          or rate-limited without notice. Do not rely on them for production or
+          Demo forms are provided for evaluation. They may be reset, deleted, or
+          rate-limited without notice. Do not rely on them for production or
           sensitive data.
         </p>
       </section>
@@ -132,8 +132,7 @@ export default function TermsPage() {
           .
         </p>
         <p>
-          See also our{" "}
-          <Link href="/privacy">Privacy Policy</Link> and{" "}
+          See also our <Link href="/privacy">Privacy Policy</Link> and{" "}
           <Link href="/cookies">Cookie Policy</Link>.
         </p>
       </section>
