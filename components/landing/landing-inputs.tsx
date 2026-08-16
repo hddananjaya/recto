@@ -9,9 +9,9 @@ import {
 import { Reveal } from "@/components/landing/reveal";
 
 const FEATURED_INPUTS = [
-  { label: "NPS", src: "/images/landing/nps.png", span: "sm:col-span-2 lg:col-span-5" },
-  { label: "Matrix", src: "/images/landing/matrix.png", span: "lg:col-span-4" },
-  { label: "File upload", src: "/images/landing/file.png", span: "lg:col-span-3" },
+  { label: "NPS", src: "/images/landing/nps.webp", span: "sm:col-span-2 lg:col-span-5" },
+  { label: "Matrix", src: "/images/landing/matrix.webp", span: "lg:col-span-4" },
+  { label: "File upload", src: "/images/landing/file.webp", span: "lg:col-span-3" },
 ] as const;
 
 export function LandingInputs() {

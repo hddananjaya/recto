@@ -157,7 +157,7 @@ export function LandingPageClient({ starCount }: LandingPageClientProps) {
             description="New responses append as rows. Your team keeps working in the same spreadsheet."
           />
           <Screenshot
-            src="/images/landing/sheets-connect.png"
+            src="/images/landing/sheets-connect.webp"
             alt="Google Sheet with waitlist responses synced from a Recto form"
             className="mt-12"
             aspectClassName="aspect-[1440/990]"

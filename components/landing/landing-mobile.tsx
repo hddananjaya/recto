@@ -34,7 +34,7 @@ export function LandingMobile() {
             <div className="absolute right-0 top-16 z-1 w-[54%] rotate-[6deg] max-md:static max-md:mb-5 max-md:w-full max-md:rotate-0">
               <DoubleBezel className="shadow-[0_40px_100px_-40px_rgba(10,10,10,0.2)]">
                 <Image
-                  src="/images/landing/mobile-editor-2.png"
+                  src="/images/landing/mobile-editor-2.webp"
                   alt="Mobile theme editor"
                   width={390}
                   height={844}
@@ -45,7 +45,7 @@ export function LandingMobile() {
             <div className="absolute left-0 top-0 z-2 w-[54%] -rotate-5 max-md:static max-md:w-full max-md:rotate-0">
               <DoubleBezel className="shadow-[0_48px_110px_-40px_rgba(10,10,10,0.24)]">
                 <Image
-                  src="/images/landing/mobile-editor-1.png"
+                  src="/images/landing/mobile-editor-1.webp"
                   alt="Mobile question editor"
                   width={390}
                   height={844}

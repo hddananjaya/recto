@@ -8,7 +8,7 @@ import {
 
 const PHONES = [
   {
-    src: "/images/landing/mobile-editor-1.png",
+    src: "/images/landing/mobile-editor-1.webp",
     alt: "Mobile form editor — question list",
     className:
       "relative z-20 w-[min(84vw,340px)] -rotate-[3deg] sm:absolute sm:left-[4%] sm:top-0 sm:w-[54%] sm:max-w-[360px] sm:-rotate-[5deg]",
@@ -16,7 +16,7 @@ const PHONES = [
       "shadow-[0_40px_100px_-32px_rgba(21,34,56,0.22)] sm:shadow-[0_48px_120px_-36px_rgba(21,34,56,0.24)]",
   },
   {
-    src: "/images/landing/mobile-editor-2.png",
+    src: "/images/landing/mobile-editor-2.webp",
     alt: "Mobile form editor — editing a question",
     className:
       "relative z-10 -mt-20 w-[min(78vw,300px)] rotate-[4deg] sm:absolute sm:right-[2%] sm:top-20 sm:mt-0 sm:w-[50%] sm:max-w-[330px] sm:rotate-[7deg]",

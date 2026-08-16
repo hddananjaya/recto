@@ -8,26 +8,26 @@ import { cn } from "@/lib/utils";
 
 const THEMES = [
   {
-    src: "/images/landing/theme-ocean-desktop.png",
+    src: "/images/landing/theme-ocean-desktop.webp",
     label: "Dark",
     alt: "Dark theme — charcoal background with gold accent",
-    aspectClassName: "aspect-[3012/1646]",
+    aspectClassName: "aspect-[1280/700]",
     cascadeClassName:
       "md:absolute md:left-0 md:top-3 md:z-10 md:w-[54%] md:max-w-xl md:-rotate-[2.5deg]",
   },
   {
-    src: "/images/landing/theme-sky-desktop.png",
+    src: "/images/landing/theme-sky-desktop.webp",
     label: "Sky",
     alt: "Sky theme — photo background with blue sky and clouds",
-    aspectClassName: "aspect-[3012/1646]",
+    aspectClassName: "aspect-[1280/700]",
     cascadeClassName:
       "md:absolute md:left-1/2 md:top-0 md:z-20 md:w-[54%] md:max-w-xl md:-translate-x-1/2 md:rotate-[1deg]",
   },
   {
-    src: "/images/landing/theme-cloud-desktop.png",
+    src: "/images/landing/theme-cloud-desktop.webp",
     label: "Rose",
     alt: "Rose theme — deep burgundy background with warm accent",
-    aspectClassName: "aspect-[3012/1646]",
+    aspectClassName: "aspect-[1280/700]",
     cascadeClassName:
       "md:absolute md:right-0 md:top-4 md:z-10 md:w-[54%] md:max-w-xl md:rotate-[3deg]",
   },
@@ -48,6 +48,7 @@ function ThemeCard({
         aspectClassName={theme.aspectClassName}
         imageClassName={LANDING_DESKTOP_IMAGE}
         sizes="(max-width: 768px) 85vw, 380px"
+        priority
       />
       <figcaption className="mt-3 text-center text-[13px] font-medium tracking-wide text-[#152238]/45">
         {theme.label}

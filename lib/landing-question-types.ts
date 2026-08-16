@@ -30,24 +30,24 @@ const EXAMPLES: Record<AiQuestionType, string> = {
   switch: "Send me product updates",
 };
 
-/** Screenshots from /f/3jyji4 — one PNG per type in public/images/landing/ */
-const LANDING_SCREENSHOTS: Record<AiQuestionType, string> = {
-  text: "/images/landing/short-text.png",
-  email: "/images/landing/email.png",
-  phone: "/images/landing/phone.png",
-  number: "/images/landing/number.png",
-  url: "/images/landing/url.png",
-  textarea: "/images/landing/long-text.png",
-  single_select: "/images/landing/option.png",
-  multi_select: "/images/landing/multi-select.png",
-  rating: "/images/landing/rating.png",
-  nps: "/images/landing/nps.png",
-  ranking: "/images/landing/ranking.png",
-  matrix: "/images/landing/matrix.png",
-  date: "/images/landing/date.png",
-  file: "/images/landing/file.png",
-  signature: "/images/landing/signature.png",
-  switch: "/images/landing/switch.png",
+/** Screenshots from /f/3jyji4 — one WebP per type in public/images/landing/ */
+export const LANDING_SCREENSHOTS: Record<AiQuestionType, string> = {
+  text: "/images/landing/short-text.webp",
+  email: "/images/landing/email.webp",
+  phone: "/images/landing/phone.webp",
+  number: "/images/landing/number.webp",
+  url: "/images/landing/url.webp",
+  textarea: "/images/landing/long-text.webp",
+  single_select: "/images/landing/option.webp",
+  multi_select: "/images/landing/multi-select.webp",
+  rating: "/images/landing/rating.webp",
+  nps: "/images/landing/nps.webp",
+  ranking: "/images/landing/ranking.webp",
+  matrix: "/images/landing/matrix.webp",
+  date: "/images/landing/date.webp",
+  file: "/images/landing/file.webp",
+  signature: "/images/landing/signature.webp",
+  switch: "/images/landing/switch.webp",
 };
 
 /** Walk order matches /f/3jyji4 (Product Waitlist demo form). */

@@ -18,7 +18,8 @@
     "e2e": "playwright test --project=linear --workers=1",
     "e2e:ui": "playwright test --ui --project=linear --workers=1",
     "e2e:ci": "playwright test --workers=1 --project=linear --headless",
-    "e2e:install": "playwright install chromium"
+    "e2e:install": "playwright install chromium",
+    "optimize-images": "./scripts/optimize-images.sh"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.1106.0",
