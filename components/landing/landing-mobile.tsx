@@ -4,7 +4,11 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
 import { useRef } from "react";
 
-import { DoubleBezel, Section, SectionHeading } from "@/components/landing/primitives";
+import {
+  DoubleBezel,
+  Section,
+  SectionHeading,
+} from "@/components/landing/primitives";
 import { Reveal } from "@/components/landing/reveal";
 
 export function LandingMobile() {
