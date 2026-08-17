@@ -4,7 +4,6 @@ FROM base AS deps
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
 COPY package.json pnpm-lock.yaml* pnpm-workspace.yaml* ./
-COPY prisma ./prisma
 RUN corepack enable && corepack prepare pnpm@10.3.0 --activate
 RUN pnpm install --frozen-lockfile
 
@@ -15,19 +14,17 @@ ARG NEXT_PUBLIC_AUTH_URL=""
 ARG NEXT_PUBLIC_TRY_FORM_ID=""
 ARG NEXT_PUBLIC_CLOUD_WAITLIST_FORM_ID=""
 ARG NEXT_PUBLIC_DEMO_MODE="false"
-ARG NODE_OPTIONS=""
 ENV NEXT_PUBLIC_SITE_URL=$NEXT_PUBLIC_SITE_URL
 ENV NEXT_PUBLIC_AUTH_URL=$NEXT_PUBLIC_AUTH_URL
 ENV NEXT_PUBLIC_TRY_FORM_ID=$NEXT_PUBLIC_TRY_FORM_ID
 ENV NEXT_PUBLIC_CLOUD_WAITLIST_FORM_ID=$NEXT_PUBLIC_CLOUD_WAITLIST_FORM_ID
 ENV NEXT_PUBLIC_DEMO_MODE=$NEXT_PUBLIC_DEMO_MODE
-ENV NODE_OPTIONS=$NODE_OPTIONS
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 ENV NEXT_TELEMETRY_DISABLED=1
 RUN corepack enable && corepack prepare pnpm@10.3.0 --activate
 RUN pnpm prisma generate
-RUN NODE_OPTIONS="--max-old-space-size=4096" pnpm build
+RUN pnpm build
 
 FROM base AS runner
 WORKDIR /app
@@ -44,6 +41,7 @@ COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 COPY --from=builder /app/prisma ./prisma
 COPY --from=builder /app/worker.ts ./worker.ts
+COPY --from=builder /app/lib ./lib
 COPY --from=builder /app/package.json ./package.json
 COPY --from=builder /app/pnpm-lock.yaml ./pnpm-lock.yaml
 COPY --from=builder /app/pnpm-workspace.yaml ./pnpm-workspace.yaml
