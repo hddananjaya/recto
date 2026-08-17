@@ -1,10 +1,7 @@
 import { NextResponse } from "next/server";
 import { createHash } from "crypto";
-import { headers } from "next/headers";
 import type { Prisma } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
-import { auth } from "@/lib/auth";
-import type { Question } from "@/lib/types";
 import { mapQuestion } from "@/lib/questions";
 import { buildSubmissionSchema, sanitizeSubmissionBody } from "@/lib/validation";
 import { getClientIp } from "@/lib/client-ip";
@@ -26,10 +23,18 @@ export async function POST(
     return NextResponse.json({ error: "Form not found" }, { status: 404 });
   }
 
-  const session = await auth.api.getSession({ headers: await headers() });
-  const isOwnerTestSubmit = Boolean(
-    session?.user?.id && session.user.id === form.ownerId,
-  );
+  let body: Record<string, unknown>;
+  try {
+    body = await request.json();
+  } catch {
+    return NextResponse.json({ error: "Invalid JSON" }, { status: 400 });
+  }
+
+  // Preview/test submissions are explicitly flagged by the client.
+  // They run through validation but are not persisted.
+  const isPreview = body.preview === true;
+  const answersBody: Record<string, unknown> = { ...body };
+  delete answersBody.preview;
 
   // Rate limit by form + IP.
   const ip = await getClientIp();
@@ -39,15 +44,8 @@ export async function POST(
     return NextResponse.json({ error: "Rate limit exceeded" }, { status: 429 });
   }
 
-  let body: Record<string, unknown>;
-  try {
-    body = await request.json();
-  } catch {
-    return NextResponse.json({ error: "Invalid JSON" }, { status: 400 });
-  }
-
   const questions = form.questions.map(mapQuestion);
-  const sanitizedBody = sanitizeSubmissionBody(questions, body);
+  const sanitizedBody = sanitizeSubmissionBody(questions, answersBody);
   const schema = buildSubmissionSchema(questions);
   const parsed = schema.safeParse(sanitizedBody);
   if (!parsed.success) {
@@ -57,8 +55,7 @@ export async function POST(
     );
   }
 
-  // Owner testing the live form while signed in — validate only, don't persist.
-  if (isOwnerTestSubmit) {
+  if (isPreview) {
     return NextResponse.json(
       { id: `preview-${crypto.randomUUID()}`, preview: true },
       { status: 201 },

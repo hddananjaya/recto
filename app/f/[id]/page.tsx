@@ -1,6 +1,6 @@
 "use client";
 
-import { useParams } from "next/navigation";
+import { useParams, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { parseAsInteger, useQueryState } from "nuqs";
 import { getPublicForm } from "@/lib/actions";
@@ -21,6 +21,8 @@ import { cn } from "@/lib/utils";
 export default function PublicFormPage() {
   const params = useParams();
   const id = params.id as string;
+  const searchParams = useSearchParams();
+  const isPreview = searchParams.get("preview") === "1";
 
   const [form, setForm] = useState<FormDetail | null>(null);
   const [loading, setLoading] = useState(true);
@@ -89,7 +91,7 @@ export default function PublicFormPage() {
         const res = await fetch(`/api/submit/${id}`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(answers),
+          body: JSON.stringify({ ...answers, preview: isPreview }),
         });
         if (!res.ok) {
           const data = (await res.json().catch(() => ({}))) as {

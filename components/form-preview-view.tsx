@@ -12,6 +12,22 @@ import { FormBackground, FormThemeProvider } from "@/components/form-theme";
 import type { FormTheme, Question } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
+async function submitPreview(formId: string, answers: Record<string, unknown>) {
+  const response = await fetch(`/api/submit/${formId}`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ ...answers, preview: true }),
+  });
+
+  const data = (await response.json().catch(() => ({
+    error: "Submission failed",
+  }))) as { error?: string };
+
+  if (!response.ok) {
+    throw new Error(data.error || "Submission failed");
+  }
+}
+
 export type FormPreviewSnapshot = {
   title: string;
   description: string;
@@ -50,8 +66,8 @@ export function FormPreviewView({
       description={snapshot.description}
       questions={snapshot.questions}
       theme={theme}
-      onSubmit={async () => {
-        await new Promise((resolve) => setTimeout(resolve, 600));
+      onSubmit={async (answers) => {
+        await submitPreview(formId, answers);
       }}
     />
   );

@@ -4,12 +4,10 @@ export const GITHUB_URL = "https://github.com/hddananjaya/recto";
 export const TRY_FORM_ID =
   process.env.NEXT_PUBLIC_TRY_FORM_ID ?? "3jyji4";
 
-/** Cloud product waitlist — built with Recto. */
-export const CLOUD_WAITLIST_FORM_ID =
-  process.env.NEXT_PUBLIC_CLOUD_WAITLIST_FORM_ID ?? "36dhp8";
+/** Cloud product waitlist — managed Recto service. */
+export const CLOUD_WAITLIST_PATH = "https://recto.cloud/forms/watzbe";
 
 export const TRY_FORM_PATH = `/f/${TRY_FORM_ID}`;
-export const CLOUD_WAITLIST_PATH = `/f/${CLOUD_WAITLIST_FORM_ID}`;
 
 /** Hosted demo — sign in to build forms on this server. */
 export const TRY_APP_PATH = "/sign-in";
