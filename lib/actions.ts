@@ -24,6 +24,7 @@ import {
   submissionPageFromRank,
 } from "@/lib/submissions-pagination";
 import { getServiceAccountEmailFromEnv } from "@/lib/sheets/service-account";
+import { FALLBACK_SAMPLE_FORM, isSampleFormId } from "@/lib/sample-form";
 
 async function getSessionUserId() {
   const session = await auth.api.getSession({ headers: await headers() });
@@ -508,7 +509,6 @@ export async function getSubmission(
     answers: submission.answers as Record<string, unknown>,
   };
 }
-
 export async function getPublicForm(id: string): Promise<FormDetail | null> {
   const form = await prisma.form.findFirst({
     where: { id, isPublished: true },
@@ -517,7 +517,12 @@ export async function getPublicForm(id: string): Promise<FormDetail | null> {
       sheetConnection: { select: { sheetUrl: true, sheetName: true } },
     },
   });
-  if (!form) return null;
+  if (!form) {
+    if (isSampleFormId(id)) {
+      return FALLBACK_SAMPLE_FORM;
+    }
+    return null;
+  }
   return {
     ...mapForm({
       ...form,

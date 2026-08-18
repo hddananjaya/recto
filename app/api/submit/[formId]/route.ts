@@ -8,16 +8,20 @@ import { getClientIp } from "@/lib/client-ip";
 import { checkRateLimit } from "@/lib/rate-limit";
 import { attachSubmissionFiles } from "@/lib/submission-files";
 
+import { FALLBACK_SAMPLE_FORM, isSampleFormId } from "@/lib/sample-form";
+
 export async function POST(
   request: Request,
   { params }: { params: Promise<{ formId: string }> },
 ) {
   const { formId } = await params;
 
-  const form = await prisma.form.findFirst({
+  const dbForm = await prisma.form.findFirst({
     where: { id: formId, isPublished: true },
     include: { questions: { orderBy: { position: "asc" } } },
   });
+
+  const form = dbForm ?? (isSampleFormId(formId) ? FALLBACK_SAMPLE_FORM : null);
 
   if (!form) {
     return NextResponse.json({ error: "Form not found" }, { status: 404 });
@@ -55,7 +59,7 @@ export async function POST(
     );
   }
 
-  if (isPreview) {
+  if (isPreview || !dbForm) {
     return NextResponse.json(
       { id: `preview-${crypto.randomUUID()}`, preview: true },
       { status: 201 },

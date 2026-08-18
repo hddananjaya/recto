@@ -58,10 +58,7 @@ export function LandingHero({ starCount }: LandingHeroProps) {
         </div>
 
         <p className="mt-5 text-sm text-[#152238]/45">
-          Try free with Google · Self-host from GitHub · MIT
-          {starCount !== null
-            ? ` · ${starCount.toLocaleString()} GitHub stars`
-            : ""}
+          MIT Licensed · Self-host with Docker · Free Live Demo
         </p>
 
         <p className="mt-2 text-sm text-[#152238]/45">

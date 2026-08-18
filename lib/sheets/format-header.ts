@@ -1,8 +1,8 @@
 import type { sheets_v4 } from "googleapis";
 import { resolveTabSheetId } from "@/lib/sheets/client";
 
-/** Recto brand navy — matches landing page text color #152238 */
-const HEADER_BACKGROUND = { red: 0.082, green: 0.129, blue: 0.22 };
+/** Static black background for header */
+const HEADER_BACKGROUND = { red: 0, green: 0, blue: 0 };
 const HEADER_TEXT = { red: 1, green: 1, blue: 1 };
 
 export async function formatSheetHeaderRow(
@@ -34,16 +34,11 @@ export async function formatSheetHeaderRow(
                 textFormat: {
                   bold: true,
                   foregroundColor: HEADER_TEXT,
-                  fontSize: 10,
                 },
-                horizontalAlignment: "LEFT",
-                verticalAlignment: "MIDDLE",
-                wrapStrategy: "CLIP",
-                padding: { top: 6, right: 10, bottom: 6, left: 10 },
               },
             },
             fields:
-              "userEnteredFormat(backgroundColor,textFormat,horizontalAlignment,verticalAlignment,wrapStrategy,padding)",
+              "userEnteredFormat(backgroundColor,textFormat)",
           },
         },
         {

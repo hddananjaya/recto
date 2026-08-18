@@ -1,90 +1,148 @@
+<div align="center">
+
+<p align="center">
+  <img src="public/logo.svg" width="64" height="64" alt="Recto Logo" />
+</p>
+
 # Recto
 
-Open-source, self-hosted forms that sync responses to Google Sheets. MIT licensed — no hosted version, no telemetry, no paid tiers.
+### Open-source, self-hosted forms synced to Google Sheets.
 
-## Try without deploying
+[![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![Docker](https://img.shields.io/badge/Docker-Ready-blue.svg?logo=docker&logoColor=white)](Dockerfile)
+[![Next.js 16](https://img.shields.io/badge/Next.js-16.3-black?logo=next.js)](https://nextjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?logo=typescript)](https://www.typescriptlang.org/)
 
-- **Demo** (`/demo`) — interactive sample form
+No response limits. No paid tiers. Own your data completely on your infrastructure.
 
-## Self-host
+<br />
 
-### Prerequisites
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/de5e75bf-a371-48c9-82cd-fb02ebc2029f" alt="Recto Google Sheets Sync Preview" width="800" />
+</p>
 
-- Node.js 20+ and pnpm
-- Docker (for Postgres and MinIO locally)
-- Google Cloud project (OAuth + Sheets API + service account)
-- S3-compatible storage (MinIO locally, R2/S3 in production)
+<br />
 
-### Local development
+[Quick Start](#-quick-start) • [Deployment](#-deployment) • [Full Guide](DEPLOYMENT.md)
 
-```bash
-git clone https://github.com/hddananjaya/recto.git
-cd recto
-pnpm install
-docker compose up -d db minio
-cp .env.example .env
-# Fill AUTH_SECRET, GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, GOOGLE_SERVICE_ACCOUNT_JSON
-pnpm db:migrate
-pnpm dev
-```
+---
+
+</div>
+
+## ✨ Why Recto?
+
+Hosted form tools like Typeform, Tally, or Jotform lock responses behind monthly subscriptions and store your data on their servers.
+
+Recto runs on your server (Postgres + S3) and streams form submissions straight into your Google Sheet:
+
+- **Google Sheets Sync**: Submissions write automatically to a Google Sheet tab with formatted column headers.
+- **AI Builder**: Generate forms from text prompts using OpenRouter (DeepSeek, Claude, or GPT models).
+- **13+ Question Types**: Short Text, Long Text, Multiple Choice, Multi-Select, Phone, Email, Date, File Upload, E-Signature, NPS, Matrix, Rating, and Switch.
+- **Self-Hosted**: Runs on Postgres and MinIO/S3. No usage caps, telemetry, or external SaaS dependencies.
+- **Production-Ready Deploy**: Scripted Docker setup with Caddy for automatic HTTPS.
+
+---
+
+## 🚀 Quick Start
+
+### Local Setup
+
+Requires **Node.js 20+**, **pnpm**, and **Docker**.
+
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/hddananjaya/recto.git
+   cd recto
+   ```
+
+2. **Install dependencies**:
+   ```bash
+   pnpm install
+   ```
+
+3. **Start Postgres & MinIO**:
+   ```bash
+   docker compose up -d db minio
+   ```
+
+4. **Configure environment**:
+   ```bash
+   cp .env.example .env
+   ```
+
+5. **Run migrations and start app**:
+   ```bash
+   pnpm db:migrate
+   pnpm dev
+   ```
 
 Open [http://localhost:3000](http://localhost:3000).
 
-### Full stack (Docker)
+---
+
+## 🐳 Docker Stack
+
+Run all services together locally:
 
 ```bash
 cp .env.example .env
-# Required: AUTH_SECRET, GOOGLE_*, S3_*
 docker compose up -d --build
 ```
 
-Services: `app`, `worker`, `db`, `minio`.
+Services started:
+- `app`: Next.js web application
+- `worker`: Background worker for Google Sheets sync
+- `db`: PostgreSQL 16
+- `minio`: S3-compatible file storage
 
-### Production (Hetzner VPS + SSL)
+---
 
-See **[DEPLOYMENT.md](DEPLOYMENT.md)** for the full guide: DNS, server bootstrap, env management, CI/CD, backups, and troubleshooting.
+## ⚡ Deployment
 
-One-command install (after DNS points to your server):
+Install on a Linux VPS with automated HTTPS:
 
 ```bash
-ssh root@YOUR_SERVER_IP
 curl -fsSL https://raw.githubusercontent.com/hddananjaya/recto/main/scripts/install.sh | \
   bash -s -- \
-  --domain recto.example.com \
-  --email admin@example.com \
-  --google-client-id XXX.apps.googleusercontent.com \
-  --google-client-secret GOCSPX-YYY \
-  --google-service-account-json '{"type":"service_account",...}'
+  --domain recto.yourdomain.com \
+  --email admin@yourdomain.com
 ```
 
-Or run the same command without arguments for an interactive prompt.
+Read [DEPLOYMENT.md](DEPLOYMENT.md) for details on environment secrets, DNS configuration, and backups.
 
-### Environment variables
+---
 
-| Variable | Purpose |
-|----------|---------|
-| `AUTH_SECRET` | Session signing |
-| `GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET` | Google sign-in |
-| `GOOGLE_SERVICE_ACCOUNT_JSON` | Sheets sync |
-| `S3_*` | File uploads |
-| `OPEN_ROUTER_KEY` | Optional — AI form generation |
-| `NEXT_PUBLIC_SITE_URL` | Canonical URL for SEO/OG metadata |
+## ⚙️ Environment Variables
 
-See [`.env.example`](.env.example) for the full list.
+| Variable | Description | Required |
+|---|---|---|
+| `AUTH_SECRET` | Key for session encryption | Yes |
+| `DATABASE_URL` | PostgreSQL connection string | Yes |
+| `S3_*` | S3 bucket & access keys | Yes |
+| `GOOGLE_CLIENT_ID` / `SECRET` | Google OAuth credentials | Optional |
+| `GOOGLE_SERVICE_ACCOUNT_JSON` | Service account JSON for Sheets | Optional |
+| `OPEN_ROUTER_KEY` | OpenRouter key for AI form generation | Optional |
 
-## Features
+See [`.env.example`](.env.example) for defaults.
 
-- AI form builder (optional OpenRouter key)
-- 13+ question types including NPS, matrix, file upload, signature
-- Themes and mobile-friendly public forms
-- Google Sheets sync
-- Self-hosted Postgres + S3 storage
+---
 
-## License
+## 🛠️ Stack
 
-MIT — see [LICENSE](LICENSE) if present, or repo root.
+- **Framework**: Next.js 16 (App Router), React 19, Tailwind CSS v4
+- **Database**: PostgreSQL 16 with Prisma ORM
+- **Storage**: S3 / MinIO
+- **Auth**: Better Auth
+- **Worker**: Node.js worker for Google Sheets sync
 
-## Links
+---
 
-- [GitHub](https://github.com/hddananjaya/recto)
-- [Report issues](https://github.com/hddananjaya/recto/issues)
+## 🤝 Contributing
+
+PRs and issues are welcome.
+
+---
+
+## 📄 License
+
+[MIT License](LICENSE).

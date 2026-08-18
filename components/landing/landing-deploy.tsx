@@ -15,10 +15,10 @@ import { trackLandingEvent } from "@/lib/landing-analytics";
 
 export function LandingDeploy() {
   return (
-    <section id="self-host" className={LANDING_SECTION}>
+    <section id="deploy" className={LANDING_SECTION}>
       <div className={LANDING_CONTAINER}>
         <SectionHeader
-          title="Run it on your own server"
+          title="Self-host with Docker"
           description={
             <>
               One <code className="text-[0.9em]">docker compose up</code> for

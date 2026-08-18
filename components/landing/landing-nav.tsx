@@ -10,15 +10,14 @@ import { Logo } from "@/components/logo";
 import { trackLandingEvent } from "@/lib/landing-analytics";
 
 const LINKS = [
-  { href: "#product", label: "Product" },
+  { href: "#features", label: "Features" },
   { href: "#themes", label: "Themes" },
-  { href: "#self-host", label: "Deploy" },
-  { href: "#cloud-waitlist", label: "Cloud" },
+  { href: "#deploy", label: "Deploy" },
   { href: "#faq", label: "FAQ" },
 ] as const;
 
 type LandingNavProps = {
-  starCount: number | null;
+  starCount?: number | null;
 };
 
 export function LandingNav({ starCount }: LandingNavProps) {
@@ -36,24 +35,24 @@ export function LandingNav({ starCount }: LandingNavProps) {
   return (
     <>
       {/* Floating glass pill navbar */}
-      <header className="fixed left-1/2 top-0 z-50 mt-4 w-[calc(100%-2rem)] max-w-3xl -translate-x-1/2 sm:mt-5">
-        <div className="flex h-14 items-center justify-between gap-4 rounded-full bg-white/80 px-4 shadow-[0_2px_8px_rgba(0,0,0,0.04),0_8px_32px_rgba(0,0,0,0.06)] ring-1 ring-[#152238]/[0.06] backdrop-blur-xl sm:px-5">
+      <header className="fixed left-1/2 top-0 z-50 mt-4 w-[calc(100%-2rem)] max-w-4xl -translate-x-1/2 sm:mt-5">
+        <div className="flex h-14 items-center justify-between gap-4 rounded-full border border-[#152238]/10 bg-white/80 px-4 shadow-[0_4px_20px_rgba(0,0,0,0.05)] backdrop-blur-xl sm:px-6">
           <Link
             href="/"
-            className="flex items-center gap-2.5 text-[#152238] transition-opacity duration-300 hover:opacity-70"
+            className="flex items-center gap-2.5 text-[#152238] transition-opacity duration-300 hover:opacity-75"
           >
             <Logo size={26} />
-            <span className="font-heading text-[15px] font-semibold tracking-tight">
+            <span className="font-heading text-[15px] font-bold tracking-tight">
               Recto
             </span>
           </Link>
 
-          <nav className="hidden items-center gap-5 md:flex">
+          <nav className="hidden items-center gap-6 md:flex">
             {LINKS.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
-                className="text-[13px] font-medium text-[#152238]/55 transition-colors duration-300 hover:text-[#152238]"
+                className="text-[13px] font-medium text-[#152238]/60 transition-colors duration-200 hover:text-[#152238]"
               >
                 {link.label}
               </a>
@@ -62,10 +61,10 @@ export function LandingNav({ starCount }: LandingNavProps) {
               href={GITHUB_URL}
               target="_blank"
               rel="noreferrer"
-              className="text-[13px] font-medium text-[#152238]/55 transition-colors duration-300 hover:text-[#152238]"
+              className="text-[13px] font-medium text-[#152238]/60 transition-colors duration-200 hover:text-[#152238]"
               onClick={() => trackLandingEvent("github_star_click")}
             >
-              GitHub{starCount !== null ? ` · ${starCount}` : ""}
+              GitHub
             </a>
           </nav>
 

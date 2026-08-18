@@ -150,7 +150,7 @@ export function LandingPageClient({ starCount }: LandingPageClientProps) {
       <LandingNav starCount={starCount} />
       <LandingHero starCount={starCount} />
 
-      <section id="product" className={LANDING_SECTION}>
+      <section id="features" className={LANDING_SECTION}>
         <div className={LANDING_CONTAINER}>
           <SectionHeader
             title="Link a Google Sheet once"
