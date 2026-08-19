@@ -5,7 +5,7 @@ export const TRY_FORM_ID =
   process.env.NEXT_PUBLIC_TRY_FORM_ID ?? "3jyji4";
 
 /** Cloud product waitlist — managed Recto service. */
-export const CLOUD_WAITLIST_PATH = "https://recto.cloud/forms/watzbe";
+export const CLOUD_WAITLIST_PATH = "https://recto.cloud/f/watzbe";
 
 export const TRY_FORM_PATH = `/f/${TRY_FORM_ID}`;
 

@@ -124,7 +124,7 @@ export function SiteFooter({ starCount, onGithubClick }: SiteFooterProps) {
               >
                 View on GitHub
               </a>
-              {starCount !== null && starCount !== undefined ? (
+              {starCount ? (
                 <span className="text-[13px] text-[#152238]/40">
                   {starCount.toLocaleString()} stars
                 </span>

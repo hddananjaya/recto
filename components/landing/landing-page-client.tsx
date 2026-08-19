@@ -246,7 +246,7 @@ export function LandingPageClient({ starCount }: LandingPageClientProps) {
                   onClick={() => trackLandingEvent("try_app_click")}
                   className={LANDING_BTN_PRIMARY}
                 >
-                  Try Recto
+                  Create a Free Form
                   <span className="flex h-6 w-6 items-center justify-center rounded-full bg-white/15 transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:translate-x-0.5">
                     <ArrowRight weight="bold" className="h-3 w-3" />
                   </span>

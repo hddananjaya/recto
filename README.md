@@ -18,7 +18,7 @@ No response limits. No paid tiers. Own your data completely on your infrastructu
 <br />
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/de5e75bf-a371-48c9-82cd-fb02ebc2029f" alt="Recto Google Sheets Sync Preview" width="800" />
+  <img src="public/images/landing/sheets-connect.webp" alt="Recto Google Sheets Sync Preview" width="800" />
 </p>
 
 <br />
